@@ -1,8 +1,7 @@
 ---
-#build project
+#buildproject
                - name: build app
-                 shell: ng build --configuration=production
-
+                 shell: ng build --prod
 
 
 
