@@ -4,7 +4,7 @@
   docker_image:
     name: myappl
     build:
-     path: /var/lib/jenkins/workspace/test5
+     path: /var/lib/jenkins/workspace/test6
      pull: no
     source: build
     state: present
