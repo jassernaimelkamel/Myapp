@@ -1,12 +1,49 @@
 pipeline
-  {
-     agent any
-      stages {
+ {
+    agent any 
+ 
+ stages {
        stage('Pull'){
          steps{
           script{
             checkout([$class: 'GitSCM',branches: [[name: '*master']],
               userRemoteConfigs:[[
-                credentialsID: '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',
+                credentialsID: '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',
                  url: 'https://github.com/jassernaimelkamel/Myapp.git']]])
-}}}}}
+}}}
+     stage('Install') {
+             steps{
+                script{
+                    sh "sudo npm install"
+                }
+             }
+     }
+
+               
+     stage('Build')
+     {
+         steps{
+         script{
+             sh "ansible-playbook Ansible/build.yml -i Ansible/inventory/host.yml"
+         }
+         }
+     }
+     
+     stage('Docker') {
+             steps{
+                script{
+                    sh "sudo ansible-playbook Ansible/docker.yml -i Ansible/inventory/host.yml"
+                }
+            }
+        }
+        stage('docker_registry') {
+    steps{
+    script {
+        sh "ansible-playbook Ansible/docker-registry.yml -i Ansible/inventory/host.yml "
+          }
+       }
+    }
+     
+     
+ }
+ }
